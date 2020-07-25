@@ -9,7 +9,16 @@ class CharactersController {
      * @returns {Promise<object>}
      */
     async getCharacters(filter) {
-        return await mRequest.getCharacters(filter);
+        const res = await mRequest.getCharacters(filter);
+        const resData = res.data || {};
+        const { offset, limit, total, count } = resData;
+        return {
+            offset,
+            limit,
+            total,
+            count,
+            characters: resData.results,
+        };
     }
 }
 
