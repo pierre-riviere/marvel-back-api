@@ -1,7 +1,8 @@
+const mRequest = require('../../helpers/marvel-request');
+
 class CharactersController {
     async getCharacters() {
-        const list = [];
-        return Promise.resolve(list);
+        return await mRequest.getCharacters();
     }
 }
 
