@@ -1,0 +1,12 @@
+{
+    "dev": {
+        "port": 3000,
+        "corsOrigin": [],
+        "frontBaseUrl": "http://localhost:4200"
+    },
+    "production": {
+        "port": 3000,
+        "corsOrigin": [],
+        "frontBaseUrl": ""
+    }
+}

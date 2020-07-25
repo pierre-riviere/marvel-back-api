@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  }
+}
