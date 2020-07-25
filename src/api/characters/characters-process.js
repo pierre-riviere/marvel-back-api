@@ -29,7 +29,12 @@ const charactersCtrl = require('../../controllers/characters');
  *     }
  */
 router.get('/list', async (req, res) => {
-    charactersCtrl.getCharacters().then(resUtils.send(res)).catch(resUtils.sendError(res));
+    const filter = ['limit', 'offset'].reduce((memo, param) => {
+        memo[param] = req.query && req.query[param] ? req.query[param] : null;
+        return memo;
+    }, {});
+
+    charactersCtrl.getCharacters(filter).then(resUtils.send(res)).catch(resUtils.sendError(res));
 });
 
 module.exports = router;

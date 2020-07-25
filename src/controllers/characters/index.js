@@ -1,8 +1,15 @@
 const mRequest = require('../../helpers/marvel-request');
 
 class CharactersController {
-    async getCharacters() {
-        return await mRequest.getCharacters();
+    /**
+     * Get characters
+     * with pagination
+     *
+     * @param {object} filter
+     * @returns {Promise<object>}
+     */
+    async getCharacters(filter) {
+        return await mRequest.getCharacters(filter);
     }
 }
 
