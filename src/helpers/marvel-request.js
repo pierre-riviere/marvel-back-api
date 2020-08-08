@@ -1,60 +1,39 @@
-const axios = require('axios');
 const md5 = require('md5');
+const { request } = require('./request');
 
 module.exports = {
     getCharacters,
 };
 
 /**
- * Request helper
+ * Marvel request Helper
  *
- * @param {object} option - request options
- * @param {string} option.url - api url to request
- * @param {string} option.method - request method (post, patch, delete, ...)
- * @param {object?} option.data - data to send
+ * @param {RequestConfig} config - request configs
  * @returns {Promise<object>}
  */
-async function request(option) {
-    const ts = Date.now();
-    const apikey = process.env.MARVEL_PUBLIC_KEY;
-    const hash = md5(`${ts}${process.env.MARVEL_PRIVATE_KEY}${process.env.MARVEL_PUBLIC_KEY}`);
+async function marvelRequest(config) {
+    config.params = {
+        ...(config.params || {}),
+        ts: Date.now(),
+        apikey: process.env.MARVEL_PUBLIC_KEY,
+    };
+    config.params.hash = md5(`${config.params.ts}${process.env.MARVEL_PRIVATE_KEY}${process.env.MARVEL_PUBLIC_KEY}`);
+    config.url = `${process.env.MARVEL_API_URL}${config.url}`;
 
-    option.url = process.env.MARVEL_API_URL + option.url + `&ts=${ts}&apikey=${apikey}&hash=${hash}`;
-
-    const response = await axios.request(option).catch((error) => {
-        const message = error.response && error.response.data ? JSON.stringify(error.response.data) : null;
-        throw new Error(`[ERROR] - Marvel api failed : ${message}`);
-    });
-
-    return response;
+    return request(config);
 }
 
 /**
- * Get characters
+ * Get Marvel characters
  *
- * @param {object} filter
- * @param {number|string} limit
- * @param {number|string} offset
+ * @param {MarvelFilter} filter - filter to apply
  * @returns {Promise<object>}
  */
 async function getCharacters(filter) {
-    let params = '';
-
-    if (typeof filter === 'object') {
-        params = Object.keys(filter)
-            .reduce((memo, param) => {
-                if (!filter[param]) {
-                    return memo;
-                }
-                memo.push(`${param}=${filter[param]}`);
-                return memo;
-            }, [])
-            .join('&');
-    }
-
-    const response = await request({
+    const response = await marvelRequest({
         method: 'get',
-        url: `/characters?${params}`,
+        url: `/characters`,
+        params: filter,
     });
     return response.data;
 }
