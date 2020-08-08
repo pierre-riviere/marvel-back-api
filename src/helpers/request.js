@@ -14,7 +14,8 @@ module.exports = {
 async function request(config) {
     const response = await axios.request(config).catch((error) => {
         const message = error.response && error.response.data ? JSON.stringify(error.response.data) : null;
-        throw new Error(`[ERROR] - ${config.url} api failed : ${message}`);
+        const url = config && config.url ? config.url : '';
+        throw new Error(`[ERROR] - ${url} api failed : ${message}`);
     });
 
     return response;
