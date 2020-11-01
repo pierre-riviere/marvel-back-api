@@ -25,7 +25,6 @@ describe('request', () => {
             await requestHelper.request(config);
             fail('should fail when given invalid config');
         } catch (e) {
-            console.log(e);
             expect(e).toBeDefined();
         }
     });
