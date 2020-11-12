@@ -29,7 +29,8 @@ const charactersCtrl = require('../../controllers/characters');
  *     }
  */
 router.get('/list', async (req, res) => {
-    const filter = ['limit', 'offset'].reduce((memo, param) => {
+    const availableParams = ['limit', 'offset', 'nameStartsWith'];
+    const filter = availableParams.reduce((memo, param) => {
         memo[param] = req.query && req.query[param] ? req.query[param] : null;
         return memo;
     }, {});

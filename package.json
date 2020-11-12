@@ -7,7 +7,8 @@
         "start": "nodemon src/index.js",
         "lint": "./node_modules/.bin/eslint .",
         "lint:fix": "./node_modules/.bin/eslint --fix .",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest --coverage --config ./jest.config.json",
+        "test:watch": "npm run test -- --watch"
     },
     "repository": {
         "type": "git",
@@ -37,5 +38,8 @@
         "nodemon": "^2.0.4",
         "path": "^0.12.7",
         "prettier": "^2.0.5"
+    },
+    "devDependencies": {
+        "jest": "^26.2.2"
     }
 }

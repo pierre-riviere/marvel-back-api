@@ -7,6 +7,6 @@
     "production": {
         "port": 3000,
         "corsOrigin": [],
-        "frontBaseUrl": ""
+        "frontBaseUrl": "http://ec2-35-180-89-101.eu-west-3.compute.amazonaws.com"
     }
 }
